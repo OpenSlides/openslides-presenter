@@ -3,7 +3,11 @@ from setuptools import find_packages, setup
 package_name = 'openslides-clicker'
 module_name = 'openslides_clicker'
 
-module = __import__(module_name)
+__verbose_name__ = 'OpenSlides CLicker Plugin'
+__description__ = 'This plugin provides a way to use presentation remotes with OpenSlides.'
+__version__ = '1.0'
+
+# module = __import__(module_name)
 
 with open('README.rst') as readme:
     long_description = readme.read()
@@ -13,10 +17,10 @@ with open('requirements.txt') as requirements:
 
 setup(
     name=package_name,
-    version=module.__version__,
-    description=module.__verbose_name__,
+    version=__version__,
+    description=__verbose_name__,
     long_description=long_description,
-    author='Authors of %s, see AUTHORS' % module.__verbose_name__,
+    author='Authors of %s, see AUTHORS' % __verbose_name__,
     author_email='eriksteenman@gmail.com',
     url='http://github.com/lesteenman',
     keywords='OpenSlides',
@@ -32,4 +36,4 @@ setup(
     packages=find_packages(),
     include_package_data=True,
     install_requires=install_requires,
-    entry_points={'openslides_plugins': '%s = %s' % (module.__verbose_name__, module_name)})
+    entry_points={'openslides_plugins': '%s = %s' % (__verbose_name__, module_name)})

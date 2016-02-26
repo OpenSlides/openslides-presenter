@@ -1,0 +1,4 @@
+include README.rst
+graft openslides_clicker
+recursive-exclude openslides_votecollector *.pyc
+recursive-exclude openslides_votecollector *.swp
