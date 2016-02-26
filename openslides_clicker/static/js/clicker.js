@@ -8,8 +8,8 @@ var previousSlide = function() {
 
 $(document).ready(function() {
     $('body').click(nextSlide);
+    $('iframeoverlay').click(nextSlide);
     $(document).keyup(function(e) {
-        console.log('Key pressed:', e.which);
         if (e.which == 37 || e.which == 40) previousSlide();
         else if (e.which == 39 || e.which == 38) nextSlide();
     });
