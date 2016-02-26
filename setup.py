@@ -3,11 +3,11 @@ from setuptools import find_packages, setup
 package_name = 'openslides-clicker'
 module_name = 'openslides_clicker'
 
+# Duplicated from openslides_video\__init__.py, as importing broke the
+# pip installer.
 __verbose_name__ = 'OpenSlides CLicker Plugin'
 __description__ = 'This plugin provides a way to use presentation remotes with OpenSlides.'
 __version__ = '1.0'
-
-# module = __import__(module_name)
 
 with open('README.rst') as readme:
     long_description = readme.read()
