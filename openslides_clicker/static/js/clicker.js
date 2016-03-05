@@ -1,3 +1,21 @@
+var nextSlideKeys = [
+    13,
+    32,
+    34,
+    39,
+    40,
+    78,
+];
+
+var prevSlideKeys = [
+    8,
+    18,
+    33,
+    37,
+    38,
+    80,
+];
+
 var nextSlide = function() {
     $.ajax('/mediafile/pdf/next/');
 };
@@ -10,7 +28,13 @@ $(document).ready(function() {
     $('body').click(nextSlide);
     $('iframeoverlay').click(nextSlide);
     $(document).keyup(function(e) {
-        if (e.which == 37 || e.which == 40 || e.which == 33) previousSlide();
-        else if (e.which == 39 || e.which == 38 || e.which == 34) nextSlide();
+        console.log("Key Up", e.which, $.inArray(e.which, prevSlideKeys), $.inArray(e.which, nextSlideKeys));
+        if ($.inArray(e.which, prevSlideKeys) >= 0) {
+            previousSlide();
+            return e.preventDefault();
+        } else if ($.inArray(e.which, nextSlideKeys) >= 0) {
+            nextSlide();
+            return e.preventDefault();
+        }
     });
 });
