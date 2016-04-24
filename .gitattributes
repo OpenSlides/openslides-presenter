@@ -1,0 +1,4 @@
+* text=auto
+
+*.py text eol=crlf
+*.js text eol=crlf
