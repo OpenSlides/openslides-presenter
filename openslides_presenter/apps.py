@@ -13,10 +13,3 @@ class PresenterAppConfig(AppConfig):
     js_files = [
         'js/openslides_presenter/base.js',
         'js/openslides_presenter/site.js']
-
-    def ready(self):
-        # Add plugin urlpatters to application configuration so OpenSlides
-        # can find it.
-        from .urls import urlpatterns
-
-        self.urlpatterns = urlpatterns
