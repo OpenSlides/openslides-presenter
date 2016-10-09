@@ -35,8 +35,6 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 	'Projector',
 	'Mediafile',
 	function($scope, $http, $document, Projector, Mediafile) {
-		console.log('Controller loaded!');
-
 		$scope.fullscreen = false;
 		$scope.mode = '';
 
@@ -46,23 +44,21 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				return element.name === 'mediafiles/mediafile';
 			});
 
-			var currentMediafile = Mediafile.find($scope.presentedMediafiles[0].id);
-			console.log('Current mediafile', $scope.currentMediafile);
-			currentMediafile.then(function(mediafile) {
-				// Allow computed fields to resolve
-				setTimeout(function() {
-					if (!mediafile) {
-						$scope.mode = 'none';
-					} else if (mediafile.is_video) {
-						$scope.mode = 'none';
-					} else if (mediafile.is_pdf) {
-						console.log('Setting to PDF');
-						$scope.mode = 'pdf';
-					} else if (mediafile.is_image) {
-						$scope.mode = 'none';
-					}
-				}, 0);
-			});
+			var mediafile = Mediafile.get($scope.presentedMediafiles[0].id);
+			// Allow computed fields to resolve
+			setTimeout(function() {
+				console.log('Loaded:', mediafile);
+				if (!mediafile) {
+					$scope.mode = 'none';
+				} else if (mediafile.is_video) {
+					$scope.mode = 'none';
+				} else if (mediafile.is_image) {
+					$scope.mode = 'none';
+				} else if (mediafile.is_pdf || mediafile.is_presentable) {
+					console.log('Setting to PDF!');
+					$scope.mode = 'pdf';
+				}
+			}, 0);
 		}
 
 		var pdfKeypress = function(e) {
@@ -120,10 +116,20 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 			$http.post('/rest/core/projector/1/update_elements/', postData);
 		};
 
+		$document.bind("mousedown", function(event) {
+			console.log('Mouse clicked:', event);
+		});
+
 		$document.bind("keydown", function(event) {
+			console.log('Keydown', event);
 			if ($scope.mode === 'pdf') {
 				pdfKeypress(event);
 			}
+		});
+
+		console.log('Destroy should be bound', $scope);
+		$scope.$on('$routeChangeStart', function(scope, next, current) {
+			'Scope is being destroyed!';
 		});
 
 		$scope.$watch(function() {

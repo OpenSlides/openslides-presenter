@@ -1,3 +1,5 @@
 include AUTHORS LICENSE README.rst requirements.txt
 graft openslides_presenter
 recursive-exclude openslides_presenter *.pyc
+recursive-exclude openslides_presenter *.swp
+recursive-exclude openslides_votecollector *~

@@ -1,27 +1,25 @@
 <link rel='stylesheet' href='static/css/presenter.css'>
 
 <div ng-controller='PresentationCtrl'>
-	Fullscreen: {{fullscreen}}<br>
+	<!-- Fullscreen: {{fullscreen}}<br> -->
 	<!-- <div id='presentation-preview' ng-class="{'fullscreen-presentation': fullscreen}"> -->
 	<!-- 	<iframe src='/projector'></iframe> -->
 	<!-- 	<div id='iframe-overlay'></div> -->
 	<!-- </div> -->
 
-	<div ng-if="!fullscreen">
-		<div ng-if="mode === 'pdf'">
-			Press 'down', 'right', 'n', 'enter', 'page down' or 'spacebar' for next slide<br>
-			Press 'left', 'top', 'p' or 'page up' for previous slide<br>
-			Press 'f5' to enter fullscreen, then press 'escape' to exit again.<br>
-			Open the 'projector' preview on the side to see the current projector view.
-		</div>
-
-		<div ng-if="mode === 'none'">
-			No controllable mediafile currently presented.
-		</div>
-
-		<!-- <h2>Current projector view</h2> -->
-		<!-- <iframe> -->
-
-		<!-- </iframe> -->
+	<div ng-if="mode === 'pdf'">
+		Press 'down', 'right', 'n', 'enter', 'page down' or 'spacebar' for next slide<br>
+		Press 'left', 'top', 'p' or 'page up' for previous slide<br>
+		Press 'f5' to enter fullscreen, then press 'escape' to exit again.<br>
+		Open the 'projector' preview on the side to see the current projector view.
 	</div>
+
+	<div ng-if="mode === 'none'">
+		No controllable mediafile currently presented.
+	</div>
+
+	<!-- <h2>Current projector view</h2> -->
+	<!-- <iframe> -->
+
+	<!-- </iframe> -->
 </div>
