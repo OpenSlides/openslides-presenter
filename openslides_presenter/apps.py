@@ -11,5 +11,6 @@ class PresenterAppConfig(AppConfig):
     angular_site_module = True
     angular_projector_module = False
     js_files = [
-        'js/openslides_presenter/base.js',
-        'js/openslides_presenter/site.js']
+        'static/js/openslides_presenter/base.js',
+        'static/js/openslides_presenter/site.js'
+    ]
