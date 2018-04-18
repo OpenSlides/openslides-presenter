@@ -15,7 +15,7 @@ to use OpenSlides, either with a mouse (soon!), keyboard or presentation remote
 
 Requirements
 ============
- - OpenSlides 2.0.x
+ - OpenSlides 2 (version 2.1 or higher)
 
 Install
 =======
@@ -60,8 +60,24 @@ This plugin is Free/Libre Open Source Software and distributed under the
 MIT License, see LICENSE file. The plugin was made by Erik Steenman
 (https://github.com/lesteenman).
 
+
+Contributors
+============
+[lesteenman](https://github.com/lesteenman)
+[FinnStutzenstein](https://github.com/FinnStutzenstein)
+[i3anaan](https://github.com/i3anaan)
+
 Changelog
 =========
+Version 2.0.2 (2018-04-18)
+--------------------------
+* Include a preview of the current slide on the presenter page
+* Add support for OpenSlides versions higher than 2.1
+
+Version 2.0.1 (2017-05-16)
+--------------------------
+* Add support for OpenSlides 2.1
+
 Version 1.1.0 (2016-05-14)
 --------------------------
 * First release of this plugin for OpenSlides 2.0.x
