@@ -14,7 +14,24 @@
 		Open the 'projector' preview on the side to see the current projector view.<br>
 
 		<h2>Live projector</h2>
-		<iframe id="iframe" width="{{iframeWidth + 'px'}}" height="{{iframeHeight + 'px'}}" src="/real-projector/1" frameborder="0"></iframe>
+		<div class="preview-selector" ng-show="projectors.length > 1" uib-dropdown>
+			<button class="btn btn-default btn-sm dropdown-toggle" id="menuProjector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+				{{ controlledProjector.name | translate }}
+				<span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu dropdown-entries" aria-labelledby="menuProjector">
+				<li ng-repeat="projector in projectors | orderBy:'id'">
+					<a href ng-class="{'projected': projector.id === controlledProjector.id}"
+			 ng-click="setControlledProjector(projector)">
+						<i ng-show="projector === active_projector" class="fa fa-check"></i>
+						{{ projector.name | translate }}
+						<i ng-show="projector.id == broadcast" class="fa fa-star-o spacer-left"></i>
+					</a>
+				</li>
+			</ul>
+		</div>
+
+		<iframe ng-if="controlledProjector" id="presenter-iframe" width="{{iframeWidth + 'px'}}" height="{{iframeHeight + 'px'}}" src="{{ '/real-projector/' + controlledProjector.id + '/'}}" frameborder="0"></iframe>
 	</div>
 
 	<div ng-if="mode === 'none'">
