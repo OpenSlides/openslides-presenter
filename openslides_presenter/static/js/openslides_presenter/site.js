@@ -58,7 +58,6 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 			var mediafile = $scope.presentedMediafiles.length ? Mediafile.get($scope.presentedMediafiles[0].id) : null;
 			// Allow computed fields to resolve
 			setTimeout(function() {
-				console.log('Loaded:', mediafile);
 				if (!mediafile) {
 					$scope.mode = 'none';
 				} else if (mediafile.is_video) {
@@ -66,7 +65,7 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				} else if (mediafile.is_image) {
 					$scope.mode = 'none';
 				} else if (mediafile.is_pdf || mediafile.is_presentable) {
-					console.log('PDF file detected, enable presenter.');
+					console.log('presenter plugin - PDF file detected, enable presenter.');
 					$scope.mode = 'pdf';
 				}
 			}, 0);
@@ -75,7 +74,6 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 		var pdfKeypress = function(e) {
 			var mediafileElement = getCurrentlyPresentedMediafile();
 			var k = e.keyCode;
-			console.log('Event: ', e);
 			if (e.ctrlKey || e.metaKey || e.altKey) {
 				return;
 			}
@@ -94,22 +92,20 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				return e.preventDefault();
 			} else if (k === 116 || k === 70) {
 				// F5. (re)start presentation.
-				console.log('Fullscreen toggle', $scope.fullscreen);
 				if ($scope.fullscreen) {
 					// $scope.fullscreen = false;
-					console.log('Already fullscreen, going to page 1');
+					console.log('presenter plugin - already fullscreen, going to page 1');
 					sendMediafileCommand({
 						page: 1
 					});
 				} else {
 					$scope.fullscreen = true;
-					console.log('Going fullscreen now');
+					console.log('presenter plugin - going to fullscreen');
 				}
-				console.log('Fullscreen is now: ', $scope.fullscreen);
 				return e.preventDefault();
 			} else if (k === 27) {
 				// Escape. Stop the presentation.
-				console.log('escape pressed', $scope.fullscreen);
+				console.log('presenter plugin - escape pressed, exit fullscreen?', $scope.fullscreen);
 				if ($scope.fullscreen) {
 					$scope.fullscreen = false;
 					return e.preventDefault();
@@ -123,24 +119,21 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 			_.extend(updateData, data);
 			var postData = {};
 			postData[mediafileElement.uuid] = updateData;
-			// console.log('Postdata: ', postData);
 			$http.post('/rest/core/projector/1/update_elements/', postData);
 		};
 
 		$document.bind("mousedown", function(event) {
-			console.log('Mouse clicked:', event);
+			// TODO: Go to next page if clicked on a relevant part of the page (e.g. not on a button)
 		});
 
 		$document.bind("keydown", function(event) {
-			console.log('Keydown', event);
 			if ($scope.mode === 'pdf') {
 				pdfKeypress(event);
 			}
 		});
 
-		console.log('Destroy should be bound', $scope);
 		$scope.$on('$routeChangeStart', function(scope, next, current) {
-			'Scope is being destroyed!';
+			'presenter plugin - scope is being destroyed!';
 		});
 
 		$scope.$watch(function() {
