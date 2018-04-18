@@ -44,7 +44,7 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				return element.name === 'mediafiles/mediafile';
 			});
 
-			var mediafile = Mediafile.get($scope.presentedMediafiles[0].id);
+			var mediafile = $scope.presentedMediafiles.length ? Mediafile.get($scope.presentedMediafiles[0].id) : null;
 			// Allow computed fields to resolve
 			setTimeout(function() {
 				console.log('Loaded:', mediafile);
