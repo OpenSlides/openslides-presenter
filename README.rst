@@ -63,9 +63,9 @@ MIT License, see LICENSE file. The plugin was made by Erik Steenman
 
 Contributors
 ============
-[lesteenman](https://github.com/lesteenman)
-[FinnStutzenstein](https://github.com/FinnStutzenstein)
-[i3anaan](https://github.com/i3anaan)
+* lesteenman (https://github.com/lesteenman)
+* FinnStutzenstein (https://github.com/FinnStutzenstein)
+* i3anaan (https://github.com/i3anaan)
 
 Changelog
 =========
