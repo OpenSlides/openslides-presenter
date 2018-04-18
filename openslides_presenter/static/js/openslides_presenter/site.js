@@ -37,6 +37,17 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 	function($scope, $http, $document, Projector, Mediafile) {
 		$scope.fullscreen = false;
 		$scope.mode = '';
+		$scope.iframeWidth = 800;
+		$scope.iframeHeight = 600;
+
+		$scope.$watch(function() {
+			return Projector.lastModified(1);
+		}, function() {
+			var projector = Projector.get(1);
+			if (projector) {
+				$scope.iframeHeight = $scope.iframeWidth * (projector.height / projector.width);
+			}
+		});
 
 		function updatePresentedMediafiles() {
 			var projectorElements = _.map(Projector.get(1).elements, function(element) { return element; });
@@ -55,7 +66,7 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				} else if (mediafile.is_image) {
 					$scope.mode = 'none';
 				} else if (mediafile.is_pdf || mediafile.is_presentable) {
-					console.log('Setting to PDF!');
+					console.log('PDF file detected, enable presenter.');
 					$scope.mode = 'pdf';
 				}
 			}, 0);
