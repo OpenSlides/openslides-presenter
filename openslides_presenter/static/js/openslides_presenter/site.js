@@ -32,22 +32,39 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 	'$scope',
 	'$http',
 	'$document',
+	'$filter',
 	'Projector',
 	'Mediafile',
-	function($scope, $http, $document, Projector, Mediafile) {
+	function($scope, $http, $document, $filter, Projector, Mediafile) {
 		$scope.fullscreen = false;
 		$scope.mode = '';
 		$scope.iframeWidth = 800;
 		$scope.iframeHeight = 600;
 
+		// Update the list with all projectors
+		$scope.$watch(function () {
+			return Projector.lastModified();
+		}, function () {
+			$scope.projectors = Projector.getAll();
+			if (!$scope.controlledProjector) {
+				$scope.controlledProjector = $filter('orderBy')($scope.projectors, 'id')[0];
+				console.log("presenter plugin - set default to", $scope.controlledProjector.id);
+			}
+		});
+
 		$scope.$watch(function() {
-			return Projector.lastModified(1);
+			return Projector.lastModified($scope.controlledProjector.id);
 		}, function() {
-			var projector = Projector.get(1);
+			var projector = Projector.get($scope.controlledProjector.id);
 			if (projector) {
 				$scope.iframeHeight = $scope.iframeWidth * (projector.height / projector.width);
 			}
 		});
+
+		$scope.setControlledProjector = function(projector) {
+			console.log('presenter plugin - set active projector to', projector);
+			$scope.controlledProjector = projector;
+		};
 
 		function updatePresentedMediafiles() {
 			var projectorElements = _.map(Projector.get(1).elements, function(element) { return element; });
@@ -65,7 +82,6 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				} else if (mediafile.is_image) {
 					$scope.mode = 'none';
 				} else if (mediafile.is_pdf || mediafile.is_presentable) {
-					console.log('presenter plugin - PDF file detected, enable presenter.');
 					$scope.mode = 'pdf';
 				}
 			}, 0);
