@@ -66,6 +66,7 @@ Contributors
 * lesteenman (https://github.com/lesteenman)
 * FinnStutzenstein (https://github.com/FinnStutzenstein)
 * i3anaan (https://github.com/i3anaan)
+* serge1peshcoff (https://github.com/serge1peshcoff)
 
 Changelog
 =========
