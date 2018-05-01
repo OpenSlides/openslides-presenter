@@ -94,14 +94,16 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				return;
 			}
 
-			if (k === 40 || k === 39 || k === 78 || k === 13 || k === 34 || k === 32) {
+			if ((k === 40 || k === 39 || k === 78 || k === 13 || k === 34 || k === 32) && mediafileElement.page < mediafileElement.numPages) {
 				// Next slide
+				// Skipping if cannot move to this slide
 				sendMediafileCommand({
 					page: mediafileElement.page + 1
 				});
 				return e.preventDefault();
-			} else if (k === 37 || k === 38 || k === 80 || k === 33) {
+			} else if ((k === 37 || k === 38 || k === 80 || k === 33) && mediafileElement.page > 1) {
 				// Previous slide
+				// Skipping if cannot move to this slide
 				sendMediafileCommand({
 					page: mediafileElement.page - 1
 				});
@@ -127,7 +129,7 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 					return e.preventDefault();
 				}
 			}
-			};
+		};
 
 		var sendMediafileCommand = function(data) {
 			var mediafileElement = getCurrentlyPresentedMediafile();
