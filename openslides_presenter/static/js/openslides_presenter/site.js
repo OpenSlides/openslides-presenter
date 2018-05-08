@@ -84,6 +84,7 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				} else if (mediafile.is_pdf || mediafile.is_presentable) {
 					$scope.mode = 'pdf';
 				}
+				$scope.$apply();
 			}, 0);
 		}
 
@@ -157,7 +158,7 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 		$scope.$watch(function() {
 			return Projector.get(1).elements;
 		}, updatePresentedMediafiles);
-		
+
 		function getCurrentlyPresentedMediafile() {
 			return $scope.presentedMediafiles[0];
 		};
