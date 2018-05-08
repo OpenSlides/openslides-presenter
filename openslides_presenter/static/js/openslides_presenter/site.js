@@ -35,7 +35,8 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 	'$filter',
 	'Projector',
 	'Mediafile',
-	function($scope, $http, $document, $filter, Projector, Mediafile) {
+	'Messaging',
+	function($scope, $http, $document, $filter, Projector, Mediafile, Messaging) {
 		$scope.fullscreen = false;
 		$scope.mode = '';
 		$scope.iframeWidth = 800;
@@ -95,36 +96,72 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				return;
 			}
 
-			if ((k === 40 || k === 39 || k === 78 || k === 13 || k === 34 || k === 32) && mediafileElement.page < mediafileElement.numPages) {
+			var sendMessage = function (text, level) {
+				var message = text + '<br/><i style="font-size: 80%;">Pressed key: "' + keysMap[e.keyCode] + '"</i>';
+				return Messaging.createOrEditMessage(
+					'presenterKeyPressed',
+					message,
+					level || 'info',
+					{ timeout: 2000 }
+				)
+			}
+
+			var keysMap = {
+				13: 'Enter',
+				27: 'Escape',
+				32: 'Space',
+				33: 'Page Up',
+				34: 'Page Down',
+				37: 'Left',
+				38: 'Up',
+				39: 'Right',
+				40: 'Down',
+				70: 'F',
+				78: 'N',
+				80: 'P',
+				116: 'F5',
+			}
+
+			if (k === 40 || k === 39 || k === 78 || k === 13 || k === 34 || k === 32) {
 				// Next slide
-				// Skipping if cannot move to this slide
-				sendMediafileCommand({
-					page: mediafileElement.page + 1
-				});
+				if (mediafileElement.page < mediafileElement.numPages) {
+					sendMessage('Going to next slide...');
+					sendMediafileCommand({
+						page: mediafileElement.page + 1
+					});
+				} else {
+					// Skipping if cannot move to this slide
+					sendMessage('Already at the last slide.', 'warning');
+				}
 				return e.preventDefault();
-			} else if ((k === 37 || k === 38 || k === 80 || k === 33) && mediafileElement.page > 1) {
+			} else if (k === 37 || k === 38 || k === 80 || k === 33) {
 				// Previous slide
-				// Skipping if cannot move to this slide
-				sendMediafileCommand({
-					page: mediafileElement.page - 1
-				});
+				if (mediafileElement.page > 1) {
+					sendMessage('Going to previous slide...');
+					sendMediafileCommand({
+						page: mediafileElement.page - 1
+					});
+				} else {
+					// Skipping if cannot move to this slide
+					sendMessage('Already at the first slide.', 'warning');
+				}
 				return e.preventDefault();
 			} else if (k === 116 || k === 70) {
 				// F5. (re)start presentation.
 				if ($scope.fullscreen) {
 					// $scope.fullscreen = false;
-					console.log('presenter plugin - already fullscreen, going to page 1');
+					sendMessage('Restarting the presentation...');
 					sendMediafileCommand({
 						page: 1
 					});
 				} else {
 					$scope.fullscreen = true;
-					console.log('presenter plugin - going to fullscreen');
+					sendMessage('Going to fullscreen...');
 				}
 				return e.preventDefault();
 			} else if (k === 27) {
 				// Escape. Stop the presentation.
-				console.log('presenter plugin - escape pressed, exit fullscreen?', $scope.fullscreen);
+				sendMessage('Stopping the presentation...');
 				if ($scope.fullscreen) {
 					$scope.fullscreen = false;
 					return e.preventDefault();
@@ -148,6 +185,13 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 		$document.bind("keydown", function(event) {
 			if ($scope.mode === 'pdf') {
 				pdfKeypress(event);
+			} else {
+				Messaging.createOrEditMessage(
+					'presenterKeyPressed',
+					'Currently presented mediafile is not controllable.',
+					'warning',
+					{ timeout: 2000 }
+				)
 			}
 		});
 
