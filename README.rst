@@ -15,7 +15,7 @@ to use OpenSlides, either with a mouse (soon!), keyboard or presentation remote
 
 Requirements
 ============
- - OpenSlides 2 (version 2.1 or higher)
+ - OpenSlides 2 (version 2.2 or higher)
 
 Install
 =======
@@ -70,6 +70,10 @@ Contributors
 
 Changelog
 =========
+Version 2.0.3 (2018-06-07)
+--------------------------
+* Add support for OpenSlides 2.2
+
 Version 2.0.2 (2018-04-18)
 --------------------------
 * Include a preview of the current slide on the presenter page
