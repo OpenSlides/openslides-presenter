@@ -21,7 +21,7 @@ setup(
     url=module.__url__,
     keywords='OpenSlides',
     classifiers=[
-        'Development Status :: 1 - Production/Unstable',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: Plugins',
         'Environment :: Web Environment',
         'Framework :: Django',
