@@ -96,6 +96,11 @@ angular.module('OpenSlidesApp.openslides_presenter.site', ['OpenSlidesApp.opensl
 				return;
 			}
 
+			// Skipping if we're not on the presenter screen.
+			if (window.location.href.indexOf('/presenter') === -1) {
+				return;
+			}
+
 			var sendMessage = function (text, level) {
 				var message = text + '<br/><i style="font-size: 80%;">Pressed key: "' + keysMap[e.keyCode] + '"</i>';
 				return Messaging.createOrEditMessage(
