@@ -69,6 +69,10 @@ MIT License, see LICENSE file. The authors are mentioned in the AUTHORS file.
 Changelog
 =========
 
+Version 2.0.5 (unreleased)
+--------------------------
+
+
 Version 2.0.4 (2018-10-19)
 --------------------------
 * Do nothing on keypress if not on projector screen
